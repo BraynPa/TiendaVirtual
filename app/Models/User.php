@@ -11,7 +11,8 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
+    const ADMIN = 1;
+    const CUSTOMER = 2;
     /**
      * The attributes that are mass assignable.
      *
@@ -44,5 +45,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function isAdmin(){
+        return $this->role == static::ADMIN;
+    }
+    public function isCustomer(){
+        return $this->role == static::CUSTOMER;
     }
 }
