@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create',[
+            'product' => new Product,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -28,7 +32,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product::create($request->all());   
+        return redirect('/home');
     }
 
     /**
@@ -44,7 +49,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit', [
+            'product' => $product,
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -52,7 +60,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return redirect('/home');
     }
 
     /**
@@ -60,6 +69,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect('/home');
     }
 }

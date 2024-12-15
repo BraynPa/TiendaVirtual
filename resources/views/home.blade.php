@@ -3,19 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+        @session('success')
+            <div class="alert alert-primary" role="alert">
+                {{$value}}
+            </div>
+        @endsession
+        <div class="col-md-9">
+            @if (auth()->user()->isAdmin())
+                <div class="row d-flex justify-content-end">
+                    <div class="col-sm-2 text-end">
+                        <a href="{{ route('products.create')}}" class="btn btn-primary">+ Product</a>
+                    </div>
                 </div>
+            @endif
+            <div class="row">
+                @each('products._product',$products, 'product')
             </div>
         </div>
     </div>
