@@ -10,7 +10,12 @@
   @error('description') <p style="color: red;">Campo es requerido</p> @enderror
 </div>
 <div class="mb-3">
-  <label for="description" class="form-label">Categoria</label>
+  <label for="image" class="form-label">Imagen</label>
+  <input type="file" name="image" class="form-control">
+  @error('image') <p style="color: red;">Campo es requerido</p> @enderror
+</div>
+<div class="mb-3">
+  <label for="category_id" class="form-label">Categoria</label>
   <select name="category_id" class="form-control">
     @foreach($categories as $category)
     <option value="{{ $category->id }}"

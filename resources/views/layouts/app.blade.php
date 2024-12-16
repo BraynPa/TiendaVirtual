@@ -20,7 +20,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -49,6 +49,9 @@
                                 </li>
                             @endif
                         @else
+                            <div id="cart-icon">
+                                @include('layouts._cart')
+                            </div>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -81,5 +84,25 @@
     function confirmDelete(){
         return confirm("Are you sure you want to delete this item?");
     }
+    Array.from(document.querySelectorAll('.addToCart')).forEach(function (element) {
+        element.addEventListener('click', function() {
+            const product = this.getAttribute('data-id');
+
+            fetch(`/add-to-cart/${product}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        quantity: 1
+                    })
+                })
+                .then(resposse => resposse.text())
+                .then(data => {
+                    document.getElementById('cart-icon').innerHTML = data;
+                });
+        });
+    });
 </script>
 </html>

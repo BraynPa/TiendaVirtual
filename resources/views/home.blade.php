@@ -19,6 +19,9 @@
             <div class="row">
                 @each('products._product',$products, 'product')
             </div>
+            <div class="d-flex justify-content-center mt-4">
+                {{ $products->links() }} 
+            </div>
         </div>
     </div>
 </div>
