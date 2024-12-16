@@ -11,7 +11,7 @@
 </div>
 <div class="mb-3">
   <label for="image" class="form-label">Imagen</label>
-  <input type="file" name="image" class="form-control">
+  <input type="file" name="image" class="form-control" value="{{ old('image', asset($product->image)) }}">
   @error('image') <p style="color: red;">Campo es requerido</p> @enderror
 </div>
 <div class="mb-3">

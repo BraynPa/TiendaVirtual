@@ -16,3 +16,4 @@ Route::resource('products', ProductController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/add-to-cart/{product}',[ShoppingCartController::class, 'store']);
+Route::get('checkout',[ShoppingCartController::class, 'index'])->name('checkout');
