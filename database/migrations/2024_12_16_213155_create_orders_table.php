@@ -15,8 +15,13 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('uuid');
-            $table->string('preference');
-            $table->text('api_response')->nullable;
+            $table->string('preference')->nullable();
+            $table->text('api_response')->nullable();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('address');
+            $table->string('state');
+            $table->string('zip');
             $table->timestamps();
         });
     }

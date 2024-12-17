@@ -34,5 +34,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'mercado_pago' => [
+        'token' => env('MERCADO_PAGO_TOKEN')
+    ]
 
 ];

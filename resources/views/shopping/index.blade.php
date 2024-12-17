@@ -15,30 +15,31 @@
             <span class="badge badge-secondary badge-pill">3</span>
           </h4>
           @include('shopping._cart')
-          <form class="card p-2">
+          <div class="card p-2">
             <div class="input-group">
-              <button class="btn btn-primary btn-lg btn-block" type="submit" style="width: 100%;">Continue to checkout</button>
+              <button form="orderForm" class="btn btn-primary btn-lg btn-block" type="submit" style="width: 100%;">Continue to checkout</button>
             </div>
-          </form>
+          </div>
         </div>
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Billing address</h4>
-          <form class="needs-validation" novalidate="">
+          <form class="needs-validation"  id="orderForm" method="POST" action="{{ route('orders.store')}}">
+            @csrf
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                <input type="text" class="form-control" name="first_name" id="firstName" placeholder="" value="" required="">
                 <div class="invalid-feedback"> Valid first name is required. </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                <input type="text" class="form-control"  name="last_name" id="lastName" placeholder="" value="" required="">
                 <div class="invalid-feedback"> Valid last name is required. </div>
               </div>
             </div>
             <div class="mb-3">
               <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+              <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" required="">
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
             <div class="mb-3">
@@ -48,7 +49,7 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label for="state">State</label>
-                <select class="form-control" id="state" required="">
+                <select class="form-control" id="state" name="state" required="">
                   <option value="">Choose...</option>
                   <option>California</option>
                 </select>
@@ -56,7 +57,7 @@
               </div>
               <div class="col-md-3 mb-3">
                 <label for="zip">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required="">
+                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="">
                 <div class="invalid-feedback"> Zip code required. </div>
               </div>
             </div>
