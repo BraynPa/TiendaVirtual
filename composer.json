@@ -11,6 +11,8 @@
     "require": {
         "php": "^8.2",
         "anayarojo/shoppingcart": "^4.2",
+        "dompdf/dompdf": "^3.0",
+        "greenter/lite": "^5.1",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",

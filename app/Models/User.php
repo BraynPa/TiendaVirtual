@@ -46,6 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function orders(){
+        return $this->hasmany(Order::class);
+    }
     public function isAdmin(){
         return $this->role == static::ADMIN;
     }
