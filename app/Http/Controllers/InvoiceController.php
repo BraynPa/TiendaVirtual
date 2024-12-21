@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FacturaGreender;
 use App\Models\Order;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Greenter\Model\Client\Client;
@@ -24,7 +25,12 @@ class InvoiceController extends Controller
     }
     public function store(FacturaGreender $factura, Request $request){
         $order = Order::find($request->invoice_id);
-        
+        if (!Session::has('Correlativo')) {
+            Session::put('Correlativo', 0); 
+        }
+            $currentValue = Session::get('Correlativo');
+            Session::put('Correlativo', $currentValue + 1);
+
         $factura->generarSee();
         // Cliente
         $client = new Client();
@@ -54,7 +60,7 @@ class InvoiceController extends Controller
             ->setTipoOperacion('0101')
             ->setTipoDoc('03')
             ->setSerie('B001')
-            ->setCorrelativo('2')
+            ->setCorrelativo(Session::get('Correlativo'))
             ->setFechaEmision(new DateTime())
             ->setTipoMoneda('PEN')
             ->setCompany($company)
@@ -66,12 +72,12 @@ class InvoiceController extends Controller
             ->setSubTotal(118)
             ->setMtoImpVenta(118)
             ;
-
+        
         $item1 = new SaleDetail();
         $item1->setCodProducto('C023')
             ->setUnidad('NIU')
             ->setCantidad(2)
-            ->setDescripcion('PROD 1')
+            ->setDescripcion('Fork')
             ->setMtoBaseIgv(100)
             ->setPorcentajeIgv(18)
             ->setIgv(18)
@@ -93,7 +99,8 @@ class InvoiceController extends Controller
                 ->setLegends([$legend]);
 
         $response = $factura->createInvoice($invoice);
-        $order->update(['factura_id' => $response->getCdrResponse()->getId(), 'pdf_file' => $factura->rutaPdf , 'xml_file' => $factura->rutaXml, 'cdr_file' => $factura->rutaCdr]);
+        $status = $factura->defineStatus($response);
+        $order->update(['status' => $status,'factura_id' => $response->getCdrResponse()->getId(), 'pdf_file' => $factura->rutaPdf , 'xml_file' => $factura->rutaXml, 'cdr_file' => $factura->rutaCdr]);
 
         return redirect()->route('invoices.index');
     }

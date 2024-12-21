@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NoticeInvoiceCreated;
+use App\Mail\SendInvoice;
+use Illuminate\Support\Facades\Storage;
 
 class Order extends Model
 {
@@ -12,6 +16,11 @@ class Order extends Model
     protected $casts = [
         'api_response' => 'array'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);
     }
@@ -30,8 +39,8 @@ class Order extends Model
     }
     public function downloadInvoice()
     {
-        /*Mail::to($this->user)->send(new SendInvoice($this->user, $this));
-        if ($this->pdf_file) {
+        Mail::to($this->user)->send(new SendInvoice($this->user, $this));
+       /* if ($this->pdf_file) {
             return $this->pdf_file;
         }*/
         define('INVOICE_PATH', 'storage/');
@@ -45,8 +54,8 @@ class Order extends Model
             $order->uuid = str()->uuid();
         });
         static::updating(function (Order $order) {
-            if ($order->isDirty('facturama_id')) {
-                //Mail::to($order->user)->send(new NoticeInvoiceCreated($order->user));
+            if ($order->isDirty('factura_id')) {
+                Mail::to($order->user)->send(new NoticeInvoiceCreated($order->user));
             }
         });
     }

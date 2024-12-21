@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
     public function store(Request $request)
     {
-        $order = Order::create($request->except('_token') + ['user_id' => auth()->id()]);
+        $order = Order::create($request->except('_token') + ['user_id' => auth()->id(), 'status' => 'No enviada']);
 
         $items = cart()->content()->map(function($item) use($order) {
             $orderDetail = OrderDetail::create([

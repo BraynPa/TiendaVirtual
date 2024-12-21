@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OauthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\OrderController;
@@ -24,3 +25,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('checkout', [ShoppingCartController::class, 'index'])->name('checkout');
   });
 
+Route::get('redirect/github', [OauthController::class, 'redirectGithub']);
+Route::get('auth/callback', [OauthController::class, 'callback']);

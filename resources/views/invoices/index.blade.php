@@ -12,15 +12,17 @@
               <th>ID</th>
               <th>Fecha</th>
               <th>Total</th>
+              <th>Estado Factura</th>
               <th>Factura</th>
             </tr>
           </thead>
           <tbody>
             @foreach($invoices as $invoice)
-              <tr>
+              <t>
                 <td>{{ $invoice->id }}</td>
                 <td>{{ $invoice->created_at }}</td>
                 <td>{{ $invoice->getTotal() }}</td>
+                <td>{{ $invoice->status }}</td>
                 <td>
                 @if (!$invoice->hasInvoice())
                     <form action="{{ route('invoices.store') }}" method="POST" id="invoiceController">

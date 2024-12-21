@@ -32,6 +32,18 @@ class FacturaGreender{
         $this->generarPdf($invoice);
         return $result;
     }
+    public function defineStatus($result){
+        $cdr = $result->getCdrResponse();
+
+        $code = (int)$cdr->getCode();
+
+        if ($code === 0) {
+            return 'Aceptada';
+        } else if ($code >= 2000 && $code <= 3999) {
+            return 'Rechazada';
+        } 
+        return 'Other Error';
+    }
     private function generarPdf($invoice){
         $options = new Options();
         $options->set('defaultFont', 'Arial');
