@@ -19,9 +19,9 @@ class OauthController extends Controller
         $response = Socialite::driver('github')->user();
 
         $user = User::firstOrCreate([
-            'email' => $response->email
+            'email' => $response->getEmail()
         ], [
-            'name' => $response->name,
+            'name' => $response->getName(),
             'password' => 'testroot',
             'role' => User::CUSTOMER
         ]);

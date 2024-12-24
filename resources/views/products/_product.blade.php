@@ -19,7 +19,7 @@
       </form>
       <div class="row">
         <div class="btn-group d-flex justify-content-end" role="group" aria-label="Basic example">
-          <button data-id="{{ $product->id }}" class="addToCart btn btn-primary">Add</button>
+          <button wire:click="addToCart({{ $product }})" class="btn btn-primary">Add</button>
           @if (auth()->user()->isAdmin())
             <a href="{{ route('products.edit', ['product' => $product]) }}" class="btn btn-warning">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down-left" viewBox="0 0 16 16">
